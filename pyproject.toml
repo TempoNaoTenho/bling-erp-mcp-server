@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bling-erp-mcp-server"
+version = "1.0.11"
+description = "MCP Server for Bling ERP API v3"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "fastmcp>=3.0.0b1,<4",
+    "httpx>=0.27",
+    "pydantic-settings>=2.0",
+    "python-dotenv>=1.0",
+    "uvicorn[standard]>=0.30",
+    "starlette>=0.38",
+    "jinja2>=3.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-asyncio>=0.23",
+    "ruff>=0.1.0",
+]
+
+[project.scripts]
+bling-mcp = "bling_mcp.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["bling_mcp*"]
+
+[dependency-groups]
+dev = [
+    "pytest>=7.0",
+    "pytest-asyncio>=0.23",
+    "ruff>=0.1.0",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]

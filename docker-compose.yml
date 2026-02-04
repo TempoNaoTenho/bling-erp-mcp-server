@@ -1,0 +1,17 @@
+services:
+  bling-mcp:
+    build: .
+    container_name: bling-mcp
+    ports:
+      - "3333:3333"
+    environment:
+      MCP_TRANSPORT: "http"
+      PORT: "3333"
+      PUBLIC_BASE_URL: "${PUBLIC_BASE_URL}"
+      BLING_CLIENT_ID: "${BLING_CLIENT_ID}"
+      BLING_CLIENT_SECRET: "${BLING_CLIENT_SECRET}"
+      TOKEN_STORE_PATH: "/data/.tokens.json"
+      UI_ENABLE: "on"
+    volumes:
+      - ./data:/data
+    restart: unless-stopped

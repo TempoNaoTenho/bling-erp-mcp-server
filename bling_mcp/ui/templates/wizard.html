@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="{{ theme }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>Bling MCP Server</title>
+  {% if active_tab == 'status' %}<meta http-equiv="refresh" content="30">{% endif %}
+  <link rel="stylesheet" href="/assets/wizard.css">
+</head>
+<body>
+  <div class="layout">
+    <header class="header">
+      <div class="header-title">
+        <div class="header-title-icon">B</div>
+        BLING MCP SERVER
+      </div>
+      <div class="header-actions">
+        <a href="/export/env" class="header-btn" title="Exportar configuracao">&#8595; Export</a>
+        <form method="POST" action="/theme/toggle" style="display: inline;">
+          <button type="submit" class="header-btn" title="Alternar tema">{{ '&#9728;' if theme == 'dark' else '&#127769;' }} Tema</button>
+        </form>
+        <div class="status-indicator">
+          <span class="status-dot {{ 'online' if nav_status.public == 'ok' else 'warning' }}"></span>
+          {{ 'Publico' if nav_status.public == 'ok' else 'Local' }}
+        </div>
+      </div>
+    </header>
+    <nav class="sidebar">
+      <a href="/ui?tab=status" class="nav-item {{ 'active' if active_tab == 'status' else '' }}">
+        <span class="nav-item-icon">&#128202;</span> Status <span class="nav-item-status {{ nav_status.status }}"></span>
+      </a>
+      <a href="/ui?tab=public" class="nav-item {{ 'active' if active_tab == 'public' else '' }}">
+        <span class="nav-item-icon">&#127760;</span> URL Publica <span class="nav-item-status {{ nav_status.public }}"></span>
+      </a>
+      <a href="/ui?tab=auth" class="nav-item {{ 'active' if active_tab == 'auth' else '' }}">
+        <span class="nav-item-icon">&#128274;</span> Autenticacao Bling <span class="nav-item-status {{ nav_status.auth }}"></span>
+      </a>
+      <a href="/ui?tab=mcp" class="nav-item {{ 'active' if active_tab == 'mcp' else '' }}">
+        <span class="nav-item-icon">&#128268;</span> MCP <span class="nav-item-status {{ nav_status.mcp }}"></span>
+      </a>
+    </nav>
+    <main class="main">
+      {% if success %}<p class="alert alert-success">Autenticado com sucesso.</p>{% endif %}
+      {% if error %}<p class="alert alert-error">Erro: {{ error }}</p>{% endif %}
+      {{ main_content | safe }}
+    </main>
+    {{ logs_panel | safe }}
+  </div>
+</body>
+</html>
